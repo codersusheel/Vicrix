@@ -1,0 +1,1523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Vicrix — API-First Creator Directory & Profile Platform</title>
+  <meta name="description" content="Discover Vicrix, an API-first creator directory designed to bring creator profiles, YouTube data, social integrations, and developer-friendly APIs into one platform.">
+  <meta name="keywords" content="Vicrix, creator directory, creator profiles, YouTube API, creator platform, Next.js, Supabase, Haproven, Codersusheel">
+  <meta name="author" content="Susheel Kumar Pandit (Codersusheel)">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b0d12">
+  <link rel="canonical" href="https://github.com/codersusheel/Vicrix/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Vicrix — A Unified Platform for Creator Profiles">
+  <meta property="og:description" content="Explore the vision, architecture, technologies, development roadmap, and API-first approach behind Vicrix.">
+  <meta property="og:url" content="https://github.com/codersusheel/Vicrix/">
+  <meta property="og:site_name" content="Vicrix">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Vicrix — Creator Directory & API Platform">
+  <meta name="twitter:description" content="One platform for structured creator profiles and social platform integrations.">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --surface: #11141c;
+      --surface-2: #171b25;
+      --border: #272d3a;
+      --text: #f3f5f9;
+      --muted: #9ba4b5;
+      --accent: #a5b4fc;
+      --accent-2: #818cf8;
+      --green: #86efac;
+      --radius: 18px;
+      --width: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(var(--width), calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .muted { color: var(--muted); }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      letter-spacing: -.035em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      font-weight: 850;
+      max-width: 900px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 800;
+    }
+
+    h3 {
+      font-size: 1.12rem;
+      font-weight: 750;
+    }
+
+    p { color: var(--muted); }
+
+    .gradient-text {
+      background: linear-gradient(100deg, #c7d2fe, #818cf8 65%, #ddd6fe);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 13, 18, .9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 1.35rem;
+      font-weight: 850;
+      letter-spacing: -.04em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #c7d2fe;
+      color: #111426;
+      font-weight: 950;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: .86rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      font-weight: 750;
+      font-size: .88rem;
+      transition: .2s ease;
+    }
+
+    .nav-cta, .btn-primary {
+      background: #c7d2fe;
+      color: #111426;
+      border-color: #c7d2fe;
+    }
+
+    .btn:hover, .nav-cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      padding: 8px 12px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 105px 0 80px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      right: -230px;
+      top: -250px;
+      background: radial-gradient(circle, rgba(129,140,248,.15), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 940px;
+    }
+
+    .hero h1 {
+      margin: 25px 0;
+    }
+
+    .hero-copy {
+      max-width: 700px;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 35px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 6px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #c1c9d7;
+      font-size: .77rem;
+      background: rgba(255,255,255,.02);
+    }
+
+    .section {
+      padding: 88px 0;
+      border-bottom: 1px solid rgba(255,255,255,.055);
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      margin: 13px 0;
+    }
+
+    .section-heading p {
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255,255,255,.025), transparent 70%),
+                  var(--surface);
+    }
+
+    .card p {
+      margin-top: 10px;
+      font-size: .93rem;
+    }
+
+    .card h3 { margin-top: 17px; }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      background: rgba(165,180,252,.10);
+      border: 1px solid rgba(165,180,252,.18);
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 850;
+    }
+
+    .number {
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
+
+    .callout {
+      margin-top: 22px;
+      padding: 20px 22px;
+      border: 1px solid rgba(165,180,252,.22);
+      border-radius: 13px;
+      background: rgba(165,180,252,.055);
+    }
+
+    .callout p { font-size: .91rem; }
+
+    .architecture {
+      display: grid;
+      gap: 10px;
+      max-width: 850px;
+      margin: 30px auto 0;
+    }
+
+    .architecture-item {
+      text-align: center;
+      padding: 19px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+
+    .architecture-item strong {
+      display: block;
+      font-size: .98rem;
+    }
+
+    .architecture-item span {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .architecture-arrow {
+      color: var(--accent);
+      text-align: center;
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 20px;
+    }
+
+    .feature {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .feature-check {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      color: var(--green);
+      background: rgba(134,239,172,.09);
+      font-size: .8rem;
+      font-weight: 900;
+    }
+
+    .feature p { font-size: .91rem; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+    }
+
+    th {
+      color: #cbd5e1;
+      background: var(--surface-2);
+      font-weight: 750;
+    }
+
+    td { color: var(--muted); }
+    td:first-child { color: var(--text); font-weight: 650; }
+    tr:last-child td { border-bottom: 0; }
+
+    .status {
+      display: inline-flex;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: .73rem;
+      color: #cbd5e1;
+      white-space: nowrap;
+    }
+
+    .status-planned {
+      color: #c4b5fd;
+      border-color: rgba(196,181,253,.2);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 13px;
+      counter-reset: steps;
+    }
+
+    .step {
+      counter-increment: steps;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .step::before {
+      content: "0" counter(steps);
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 850;
+    }
+
+    .step h3 { margin-top: 17px; }
+    .step p { margin-top: 8px; font-size: .86rem; }
+
+    .code-block {
+      overflow-x: auto;
+      padding: 22px;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #080a0f;
+      color: #cbd5e1;
+      font: .83rem/1.9 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    summary {
+      padding: 19px 20px;
+      cursor: pointer;
+      font-weight: 750;
+      list-style-position: inside;
+    }
+
+    details p {
+      padding: 0 20px 20px;
+      font-size: .91rem;
+    }
+
+    .cta-panel {
+      padding: clamp(28px, 6vw, 55px);
+      border: 1px solid rgba(165,180,252,.2);
+      border-radius: 22px;
+      background: radial-gradient(ellipse at top right, rgba(129,140,248,.12), transparent 60%),
+                  var(--surface);
+    }
+
+    .cta-panel h2 {
+      margin: 15px 0;
+      max-width: 650px;
+    }
+
+    .cta-panel p { max-width: 680px; }
+
+    .footer {
+      padding: 35px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer p, .footer a {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer a:hover { color: var(--text); }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        padding: 18px 20px 23px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #0e1017;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 11px 0; }
+      .menu-toggle { display: inline-flex; }
+      .nav-cta { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .container { width: min(100% - 28px, var(--width)); }
+      .hero { padding: 75px 0 60px; }
+      .section { padding: 65px 0; }
+      .grid, .grid-2, .steps { grid-template-columns: 1fr; }
+      .card { padding: 21px; }
+      .hero-copy { font-size: .98rem; }
+      .hero-actions .btn { width: 100%; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Vicrix",
+    "description": "An API-first creator directory and profile platform designed for structured creator information and social platform integrations.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "Susheel Kumar Pandit",
+      "alternateName": "Codersusheel"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Haproven",
+      "url": "https://haproven.netlify.app"
+    },
+    "codeRepository": "https://github.com/codersusheel/Vicrix/"
+  }
+  </script>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="container nav">
+    <a href="#home" class="brand" aria-label="Vicrix home">
+      <span class="brand-mark">V</span>
+      <span>Vicrix<span class="gradient-text">.</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#technology">Technology</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+
+    <a class="nav-cta" href="https://github.com/codersusheel/Vicrix/" target="_blank" rel="noopener noreferrer">View Repository ↗</a>
+
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+      Menu
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <span class="eyebrow">Creator infrastructure · Developer-first</span>
+
+      <h1>
+        One platform.<br>
+        <span class="gradient-text">Connected creator identities.</span>
+      </h1>
+
+      <p class="hero-copy">
+        Vicrix is an API-first creator directory and profile platform
+        designed to bring creator information, channel data, social links,
+        and structured public profiles into one organized ecosystem.
+        Built with a developer-first approach, Vicrix aims to make creator
+        data easier to access, display, and integrate into other applications.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#about">Explore Vicrix ↓</a>
+        <a class="btn btn-secondary" href="https://github.com/codersusheel/Vicrix/" target="_blank" rel="noopener noreferrer">Explore Source Code ↗</a>
+      </div>
+
+      <div class="hero-tags">
+        <span class="tag">Next.js</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">YouTube API</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Creator Profiles</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">01 · Project overview</span>
+        <h2>What exactly is Vicrix?</h2>
+        <p>
+          Vicrix is being designed as a centralized system for storing,
+          presenting, and serving creator profile information through a
+          website and developer-friendly APIs.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Creator Directory</h3>
+          <p>
+            An organized directory where individual creators can have
+            dedicated profile pages containing their identity, biography,
+            social links, and available public platform information.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Unified Profiles</h3>
+          <p>
+            A consistent profile structure that can bring together
+            information from supported platforms instead of displaying
+            every platform in a completely different format.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>API-First Architecture</h3>
+          <p>
+            A backend API designed to return structured creator data
+            that other websites, dashboards, and applications can
+            consume when authorized and technically supported.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <p>
+          <strong>Project status:</strong> This website explains the
+          Vicrix vision and proposed architecture. Features described
+          as planned are not necessarily implemented or publicly available.
+          Actual functionality depends on the code deployed in the
+          official repository.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PURPOSE -->
+  <section class="section" id="purpose">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">02 · Purpose</span>
+        <h2>Why is Vicrix being built?</h2>
+        <p>
+          Creator information is spread across multiple platforms.
+          Vicrix aims to provide a more structured way to organize that
+          information and make it useful for both visitors and developers.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Reduce fragmented information</h3>
+          <p>
+            Keep a creator's biography, channel identity, and supported
+            social links together in one profile.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Make integration simpler</h3>
+          <p>
+            Provide a consistent API response so consuming applications
+            do not need to build a separate profile data structure
+            for every creator.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Support future growth</h3>
+          <p>
+            Build a foundation that can later support search, creator
+            discovery, more integrations, profile management, and
+            additional developer tools.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Improve profile presentation</h3>
+          <p>
+            Give each creator a dedicated URL with organized content,
+            readable information, and search-engine-friendly metadata.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Keep data structured</h3>
+          <p>
+            Store creator records in a database instead of relying
+            entirely on hardcoded profile information across pages.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Enable reusable infrastructure</h3>
+          <p>
+            Create a foundation that other projects may integrate with
+            when the necessary API endpoints, access rules, and
+            documentation are available.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">03 · Planned capabilities</span>
+        <h2>What can Vicrix include?</h2>
+        <p>
+          The following capabilities define the intended product direction.
+          Their availability depends on implementation progress.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-icon">P</div>
+          <h3>Dedicated Creator Pages</h3>
+          <p>
+            Individual public URLs, custom biographies, profile identity,
+            channel links, and available social information.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">Y</div>
+          <h3>YouTube Integration</h3>
+          <p>
+            Where permitted by the YouTube API, retrieve channel details,
+            public statistics, and recent videos using a configured
+            API key and supported endpoints.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">A</div>
+          <h3>Unified Creator API</h3>
+          <p>
+            A consistent JSON response containing creator identity,
+            profile information, and supported platform data.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">S</div>
+          <h3>Social Platform Links</h3>
+          <p>
+            Store social handles and official links. Deeper integrations
+            may require platform-specific permissions, tokens, and
+            approved API access.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">SEO</div>
+          <h3>Search-Friendly Profiles</h3>
+          <p>
+            Server-rendered profile content, unique page metadata,
+            canonical URLs, and suitable structured data.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">DX</div>
+          <h3>Developer Integration</h3>
+          <p>
+            Documented endpoints, consistent errors, input validation,
+            caching, and examples for applications that consume Vicrix.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="section" id="use-cases">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">04 · Use cases</span>
+        <h2>Who is Vicrix for?</h2>
+        <p>
+          Vicrix is intended to support multiple types of creator-focused
+          applications, subject to the features and access policies
+          implemented in the platform.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>For creators</h3>
+          <div class="feature-list">
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>A dedicated public creator profile.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>One place to organize supported social links.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>A consistent presentation of available public information.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>For developers</h3>
+          <div class="feature-list">
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>A structured response for creator information.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>A reusable foundation for creator-related applications.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>A future path toward additional platform integrations.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY -->
+  <section class="section" id="technology">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">05 · Technology stack</span>
+        <h2>How is Vicrix being built?</h2>
+        <p>
+          The proposed stack separates the presentation layer, application
+          logic, database, and external platform integrations.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Next.js</h3>
+          <p>
+            Application framework for routing, server-rendered pages,
+            metadata, and API route handlers.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>React</h3>
+          <p>
+            Component-based user interfaces and reusable profile layouts
+            within the Next.js application.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Tailwind CSS</h3>
+          <p>
+            Utility-first styling for consistent spacing, responsive
+            layouts, and maintainable UI development.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Supabase</h3>
+          <p>
+            PostgreSQL database infrastructure for creator records,
+            profile slugs, platform identifiers, and application data.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>YouTube Data API</h3>
+          <p>
+            External API integration for supported channel and video
+            information, subject to quota and API policies.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>REST API + JSON</h3>
+          <p>
+            HTTP endpoints that validate requests and return structured
+            responses for frontend pages and authorized consumers.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <p>
+          <strong>Configuration:</strong> API keys and privileged database
+          credentials belong in server-side environment variables.
+          Secret keys must never be embedded in public browser JavaScript
+          or committed to a public repository.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">06 · System architecture</span>
+        <h2>How does the system work?</h2>
+        <p>
+          The intended request flow moves from the visitor to the
+          application, through server-side data services, and back
+          to a rendered profile or JSON response.
+        </p>
+      </div>
+
+      <div class="architecture">
+        <div class="architecture-item">
+          <strong>01. Visitor or External Application</strong>
+          <span>Opens a creator profile or requests API data.</span>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-item">
+          <strong>02. Next.js Application</strong>
+          <span>Routes the request and renders the page or handles the API call.</span>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-item">
+          <strong>03. Server-Side Data Layer</strong>
+          <span>Validates the request, retrieves records, and applies caching rules.</span>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-item">
+          <strong>04. Supabase + Supported External APIs</strong>
+          <span>Supabase stores records; approved APIs provide available platform data.</span>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-item">
+          <strong>05. Normalized Response</strong>
+          <span>The application returns structured JSON or displays a creator profile.</span>
+        </div>
+      </div>
+
+      <div class="section-heading" style="margin-top:55px;margin-bottom:20px">
+        <h3>Example API response</h3>
+        <p>
+          Illustrative JSON showing the intended response format.
+          It is an example, not a claim that this endpoint is live.
+        </p>
+      </div>
+
+      <pre class="code-block"><code>{
+  "success": true,
+  "data": {
+    "slug": "example-creator",
+    "name": "Example Creator",
+    "bio": "Creator biography goes here.",
+    "platforms": {
+      "youtube": {
+        "connected": true,
+        "channelId": "YOUTUBE_CHANNEL_ID",
+        "subscribers": null,
+        "videos": []
+      },
+      "instagram": {
+        "connected": false,
+        "handle": null
+      },
+      "facebook": {
+        "connected": false,
+        "pageId": null
+      }
+    }
+  },
+  "meta": {
+    "source": "vicrix",
+    "version": "v1"
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- DATA MODEL -->
+  <section class="section" id="data">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">07 · Data design</span>
+        <h2>How creator data is organized</h2>
+        <p>
+          A proposed database structure separates a creator's identity
+          from the platform identifiers used to retrieve external data.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td>Unique database record identifier</td>
+              <td>UUID</td>
+            </tr>
+            <tr>
+              <td>slug</td>
+              <td>Creator's URL identifier</td>
+              <td>example-creator</td>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>Display name</td>
+              <td>Example Creator</td>
+            </tr>
+            <tr>
+              <td>custom_bio</td>
+              <td>Creator biography</td>
+              <td>Public profile description</td>
+            </tr>
+            <tr>
+              <td>yt_channel_id</td>
+              <td>YouTube channel identifier</td>
+              <td>Channel ID</td>
+            </tr>
+            <tr>
+              <td>ig_handle</td>
+              <td>Instagram account handle</td>
+              <td>examplecreator</td>
+            </tr>
+            <tr>
+              <td>fb_page_id</td>
+              <td>Facebook Page identifier</td>
+              <td>Page ID</td>
+            </tr>
+            <tr>
+              <td>created_at</td>
+              <td>Record creation timestamp</td>
+              <td>Timestamp</td>
+            </tr>
+            <tr>
+              <td>updated_at</td>
+              <td>Last record update</td>
+              <td>Timestamp</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p>
+          This is a proposed initial schema. Production implementation
+          may need additional tables for platform connections, credentials,
+          permissions, API usage, audit logs, and creator verification.
+          Private credentials should not be stored as ordinary public
+          profile fields.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS -->
+  <section class="section" id="integrations">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">08 · Integrations</span>
+        <h2>Connecting creator platforms</h2>
+        <p>
+          Each platform has its own API capabilities, access rules,
+          authentication requirements, and limitations.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>YouTube</h3>
+          <p>
+            Intended first integration. Supported public channel and
+            video information can be retrieved using the YouTube Data API.
+            API quotas, privacy settings, and current platform policies apply.
+          </p>
+          <div style="margin-top:17px">
+            <span class="status">Initial integration target</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Instagram</h3>
+          <p>
+            A future integration may use Meta's supported Instagram APIs
+            for eligible professional accounts and authorized access.
+            Available fields depend on the API, account type, and permissions.
+          </p>
+          <div style="margin-top:17px">
+            <span class="status status-planned">Planned</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Facebook</h3>
+          <p>
+            A future integration may retrieve eligible Page information
+            through supported Meta APIs with the required permissions
+            and access tokens.
+          </p>
+          <div style="margin-top:17px">
+            <span class="status status-planned">Planned</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section class="section" id="security">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">09 · Security & reliability</span>
+        <h2>Built with responsible data handling in mind</h2>
+        <p>
+          A reliable creator platform needs more than profile pages.
+          It also needs secure credentials, predictable API behavior,
+          and appropriate data access controls.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>Secrets and access control</h3>
+          <div class="feature-list">
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Keep service-role keys and API secrets on the server.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Validate input and restrict access to private operations.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Use appropriate database permissions and access policies.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Performance and reliability</h3>
+          <div class="feature-list">
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Cache external data where permitted and useful.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Handle missing records, timeouts, and quota errors.</p>
+            </div>
+            <div class="feature">
+              <span class="feature-check">✓</span>
+              <p>Plan rate limiting, monitoring, and abuse prevention.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">10 · Development roadmap</span>
+        <h2>From foundation to creator ecosystem</h2>
+        <p>
+          The following phases describe a suggested development plan,
+          not a claim that each phase has already been completed.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <h3>Foundation</h3>
+          <p>
+            Set up the Next.js application, environment variables,
+            Supabase connection, and initial creator schema.
+          </p>
+        </article>
+
+        <article class="step">
+          <h3>Profiles & API</h3>
+          <p>
+            Build dynamic creator pages, slug-based lookup,
+            normalized JSON responses, and basic error handling.
+          </p>
+        </article>
+
+        <article class="step">
+          <h3>Platform Data</h3>
+          <p>
+            Integrate YouTube data, implement caching, and evaluate
+            additional platforms using their official APIs.
+          </p>
+        </article>
+
+        <article class="step">
+          <h3>Production Growth</h3>
+          <p>
+            Add documentation, search, profile management,
+            security hardening, monitoring, and further integrations.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENCE -->
+  <section class="section" id="difference">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">11 · Product direction</span>
+        <h2>What makes the Vicrix approach useful?</h2>
+        <p>
+          The main idea is to treat creator profiles as structured data
+          that can be reused across multiple experiences, rather than
+          creating isolated pages with disconnected information.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Structured first</h3>
+          <p>
+            Keep creator identity, platform identifiers, and profile
+            information organized around a defined data model.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Integration ready</h3>
+          <p>
+            Design consistent interfaces so new applications can consume
+            creator data without depending on page markup.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Designed to evolve</h3>
+          <p>
+            Start with a focused implementation and add platform
+            connections, management tools, and discovery features over time.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">12 · Frequently asked questions</span>
+        <h2>Questions about Vicrix</h2>
+      </div>
+
+      <div class="faq-list">
+        <details>
+          <summary>What is Vicrix?</summary>
+          <p>
+            Vicrix is a creator directory and API-first profile platform
+            being designed to organize creator information and integrate
+            supported social platform data.
+          </p>
+        </details>
+
+        <details>
+          <summary>Who created Vicrix?</summary>
+          <p>
+            Vicrix is attributed to Susheel Kumar Pandit, also known as
+            Codersusheel, under Haproven.
+          </p>
+        </details>
+
+        <details>
+          <summary>Which technologies are used?</summary>
+          <p>
+            The proposed stack includes Next.js, React, Tailwind CSS,
+            Supabase, server-side API routes, and supported external APIs.
+            Check the repository for the actual current implementation.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does Vicrix support YouTube, Instagram, and Facebook?</summary>
+          <p>
+            YouTube is the initial integration target in the proposed
+            architecture. Instagram and Facebook integrations are planned
+            possibilities and require the appropriate APIs, permissions,
+            and implementation.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can another application use Vicrix APIs?</summary>
+          <p>
+            The architecture is intended to support API consumers.
+            Availability, authentication requirements, usage limits,
+            and permissions will depend on the deployed API and its policy.
+          </p>
+        </details>
+
+        <details>
+          <summary>Is Vicrix production-ready?</summary>
+          <p>
+            This page describes the product vision and development approach.
+            Production readiness must be verified against the actual
+            implementation, deployment, security controls, and tests.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can developers copy or redistribute the code?</summary>
+          <p>
+            They must follow the license included in the official
+            repository and any applicable law. A public GitHub repository
+            does not automatically grant open-source reuse permissions.
+          </p>
+        </details>
+
+        <details>
+          <summary>Where can I explore the source code?</summary>
+          <p>
+            Visit the official Vicrix repository on GitHub to inspect
+            the source code, documentation, and current development status.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" id="repository">
+    <div class="container">
+      <div class="cta-panel">
+        <span class="eyebrow">13 · Explore the project</span>
+        <h2>Building a more connected creator ecosystem.</h2>
+        <p>
+          Vicrix brings together the idea of structured creator profiles,
+          reusable APIs, and supported social platform integrations.
+          Explore the source repository to understand the implementation
+          and follow its development.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/codersusheel/Vicrix/" target="_blank" rel="noopener noreferrer">
+            View Vicrix on GitHub ↗
+          </a>
+          <a class="btn btn-secondary" href="https://haproven.netlify.app/" target="_blank" rel="noopener noreferrer">
+            Explore Haproven ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <a href="#home" class="brand">
+        <span class="brand-mark">V</span>
+        <span>Vicrix<span class="gradient-text">.</span></span>
+      </a>
+      <p style="margin-top:10px">
+        An API-first creator directory concept.
+      </p>
+      <p style="margin-top:5px">
+        © <span id="year">2026</span> Vicrix. Original project by
+        Susheel Kumar Pandit (Codersusheel).
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#technology">Technology</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="https://github.com/codersusheel/Vicrix/" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://haproven.netlify.app/" target="_blank" rel="noopener noreferrer">Haproven ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.textContent = isOpen ? "Close" : "Menu";
+  });
+
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "Menu";
+    });
+  });
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>
