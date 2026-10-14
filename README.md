@@ -1,5 +1,4 @@
-# Vicrix
-Vicrix is the leading digital directory for viral social media creators. Explore detailed influencer bios, engagement stats, and viral highlights.
+
 # Vicrix — Technical Architecture & Complete Implementation Blueprint
 
 > **Vicrix is an API-first creator discovery platform that unifies creator profiles, social media statistics, and public content into one lightweight, searchable directory.**
