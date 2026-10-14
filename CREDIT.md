@@ -2,7 +2,7 @@
 
 ## 1. About the Project
 
-**Vicrix** is an original software project created and maintained by **Susheel Kumar Pandit**, also known as **Codersusheel**, under **Haproven**.
+**Vicrix** is an original software project created and maintained by **Susheel Kumar **, also known as **Codersusheel**, under **Haproven**.
 
 Vicrix is designed to provide an API-first creator directory and profile platform, with integrations for creator data and social media platforms.
 
@@ -11,7 +11,7 @@ This document establishes the project's attribution guidelines, original ownersh
 ### Official Project Information
 
 - **Project Name:** Vicrix
-- **Original Creator:** Susheel Kumar Pandit (Codersusheel)
+- **Original Creator:** Susheel Kumar  (Codersusheel)
 - **Organization:** Haproven
 - **Official Website:** https://haproven.netlify.app
 - **Original Repository:** https://github.com/codersusheel/Vicrix/
@@ -22,7 +22,7 @@ This document establishes the project's attribution guidelines, original ownersh
 
 ## 2. Original Creator and Attribution
 
-Vicrix was originally developed by **Susheel Kumar Pandit (Codersusheel)** under Haproven.
+Vicrix was originally developed by **Susheel Kumar  (Codersusheel)** under Haproven.
 
 Anyone using, modifying, extending, or redistributing Vicrix code must follow the terms of the applicable software license.
 
@@ -37,7 +37,7 @@ Users and contributors are encouraged to preserve the project's development hist
 When using or redistributing Vicrix in a manner permitted by its applicable license, users should follow these attribution practices:
 
 1. **Preserve existing notices:** Retain applicable copyright notices, license notices, and existing attribution information as required by the license.
-2. **Credit the original project:** Acknowledge Vicrix as the original project and Susheel Kumar Pandit (Codersusheel) as its original creator.
+2. **Credit the original project:** Acknowledge Vicrix as the original project and Susheel Kumar  (Codersusheel) as its original creator.
 3. **Link to the source:** Include a link to the original Vicrix repository in the project's README, documentation, or another appropriate location when required or agreed upon.
 4. **Identify modifications:** Clearly distinguish your modifications, extensions, and additional features from the original Vicrix implementation.
 5. **Avoid false ownership claims:** Do not misrepresent yourself as the original creator of Vicrix or claim authorship of work created by someone else.
@@ -53,11 +53,11 @@ If your project uses or is based on Vicrix, the following attribution format is 
 
 ### Standard Attribution
 
-> This project uses or is based on Vicrix, originally created by Susheel Kumar Pandit (Codersusheel) under Haproven.
+> This project uses or is based on Vicrix, originally created by Susheel Kumar  (Codersusheel) under Haproven.
 >
 > Original Project: https://github.com/codersusheel/Vicrix/
 >
-> Original Creator: Susheel Kumar Pandit (Codersusheel)
+> Original Creator: Susheel Kumar  (Codersusheel)
 >
 > Organization: Haproven
 >
@@ -151,7 +151,7 @@ If mandatory attribution, restrictions on redistribution, or protection of propr
 For questions about Vicrix attribution, source code, authorized branding use, or project ownership, refer to the official project repository.
 
 - **GitHub:** https://github.com/codersusheel/Vicrix/
-- **Creator:** Susheel Kumar Pandit (Codersusheel)
+- **Creator:** Susheel Kumar  (Codersusheel)
 - **Organization:** Haproven
 - **Website:** https://haproven.netlify.app
 
@@ -160,7 +160,7 @@ For accurate project information, use the original repository as the primary sou
 ---
 
 **Vicrix**  
-Created by **Susheel Kumar Pandit (Codersusheel)**  
+Created by **Susheel Kumar  (Codersusheel)**  
 Under **Haproven**
 
 *Build upon the project responsibly. Respect the original work. Give credit where it is due.*
